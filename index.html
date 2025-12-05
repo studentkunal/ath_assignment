@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATH Innovations Internship Assignment</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind for Inter font and modern theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ath-primary': '#4f46e5', // Indigo-600 for primary
+                        'ath-accent': '#6366f1', // Indigo-500 for hover
+                        'ath-dark': '#111827',   // Gray-900 for dark text/background
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for better aesthetics and form focus */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        /* Focus state for form inputs */
+        input:focus, textarea:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 1px #4f46e5;
+        }
+
+        /* Responsive Hero Background */
+        .hero-bg {
+            background-image: linear-gradient(135deg, rgba(79, 70, 229, 0.9), rgba(59, 130, 246, 0.9)), url('https://placehold.co/1200x800/222233/ffffff?text=Modern+Development');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Keyframe for a subtle card fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated-card {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app-container" class="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden md:min-h-[500px]">
+
+    <!-- 1. Homepage View -->
+    <section id="page-home" class="hidden">
+        <div class="hero-bg text-white p-12 md:p-16 flex flex-col items-center text-center rounded-t-xl">
+            <div class="max-w-xl">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">
+                    ATH Innovations Internship Assignment
+                </h1>
+                <p class="text-lg opacity-90 mb-8">
+                    A clean, functional mini web application with three pages to evaluate coding ability, UI skills, and structure.
+                </p>
+                <button onclick="navigate('form')"
+                        class="px-8 py-3 bg-white text-ath-primary font-semibold rounded-lg shadow-lg hover:bg-gray-100 transition duration-300 transform hover:scale-[1.02]">
+                    Start Submission
+                </button>
+            </div>
+        </div>
+        <div class="p-8 text-center text-gray-600">
+            <p class="text-sm">The clean and responsive design</p>
+        </div>
+    </section>
+
+    <!-- 2. Form Page View -->
+    <section id="page-form" class="hidden p-8 md:p-10">
+        <h2 class="text-3xl font-bold text-ath-dark mb-6 border-b pb-2">Submit Your Project Details</h2>
+
+        <form id="project-form" onsubmit="event.preventDefault(); handleFormSubmit();" class="space-y-6">
+
+            <!-- Full Name -->
+            <div>
+                <label for="full-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                <input type="text" id="full-name" name="full-name" required
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:ring-ath-primary focus:border-ath-primary">
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                <input type="email" id="email" name="email" required
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:ring-ath-primary focus:border-ath-primary">
+            </div>
+
+            <!-- Project Title -->
+            <div>
+                <label for="project-title" class="block text-sm font-medium text-gray-700">Project Title</label>
+                <input type="text" id="project-title" name="project-title" required
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:ring-ath-primary focus:border-ath-primary">
+            </div>
+
+            <!-- Project Description -->
+            <div>
+                <label for="project-description" class="block text-sm font-medium text-gray-700">Project Description</label>
+                <textarea id="project-description" name="project-description" rows="4" required
+                          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:ring-ath-primary focus:border-ath-primary"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button type="submit"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-ath-primary hover:bg-ath-accent transition duration-300">
+                    Submit Project
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- 3. Display Page View -->
+    <section id="page-display" class="hidden p-8 md:p-10">
+        <h2 class="text-3xl font-bold text-ath-dark mb-8 border-b pb-2">Submission Confirmed!</h2>
+
+        <!-- Data Card Container -->
+        <div id="data-card" class="animated-card bg-gray-50 border border-gray-200 p-6 md:p-8 rounded-xl shadow-lg space-y-4">
+            <h3 class="text-xl font-semibold text-ath-primary flex items-center">
+                <!-- Using Lucide icon for better UI -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-2">
+                    <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+                    <path d="M17 3H7a2 2 0 0 0-2 2v2h14V5a2 2 0 0 0-2-2z"/>
+                </svg>
+                Project: <span id="display-title" class="ml-2 font-bold"></span>
+            </h3>
+
+            <!-- Responsive Grid for Name/Email -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                <div>
+                    <p class="text-sm text-gray-500">Submitted By:</p>
+                    <p id="display-name" class="text-lg font-medium text-gray-800"></p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Contact Email:</p>
+                    <p id="display-email" class="text-lg font-medium text-gray-800 break-all"></p>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="pt-4 border-t mt-4">
+                <p class="text-sm text-gray-500 mb-1">Description:</p>
+                <p id="display-description" class="text-gray-700 leading-relaxed whitespace-pre-wrap"></p>
+            </div>
+        </div>
+
+        <button onclick="goBackToHome()"
+                class="mt-8 px-6 py-2 border border-ath-primary text-ath-primary font-medium rounded-md hover:bg-ath-primary hover:text-white transition duration-300">
+            Go Back / Clear Data
+        </button>
+    </section>
+
+    <!-- Global Message Box (used instead of alert()) -->
+    <div id="message-box" class="hidden fixed top-4 right-4 bg-red-600 text-white p-4 rounded-lg shadow-xl transition-opacity duration-300 z-50"></div>
+
+</div>
+
+<script>
+    // State management and data retrieval/storage
+    const APP_STATE = {
+        currentPage: 'home',
+        projectData: null
+    };
+
+    const DATA_STORAGE_KEY = 'athProjectSubmission';
+
+    /**
+     * Shows a custom message box instead of using the forbidden window.alert().
+     * @param {string} message - The message to display.
+     * @param {string} type - 'success' or 'error'.
+     */
+    function showMessage(message, type = 'error') {
+        const box = document.getElementById('message-box');
+        box.textContent = message;
+        
+        // Apply styling based on type
+        box.classList.remove('hidden', 'bg-red-600', 'bg-green-600');
+        if (type === 'success') {
+            box.classList.add('bg-green-600');
+        } else {
+            box.classList.add('bg-red-600');
+        }
+        
+        // Fade in and set a timer to fade out
+        box.style.opacity = '1';
+
+        setTimeout(() => {
+            box.style.opacity = '0';
+            setTimeout(() => {
+                box.classList.add('hidden');
+            }, 300); // Wait for transition
+        }, 3000);
+    }
+
+    /**
+     * Simple client-side navigation/routing function.
+     * @param {string} pageName - The ID suffix of the page section to show ('home', 'form', or 'display').
+     */
+    function navigate(pageName) {
+        APP_STATE.currentPage = pageName;
+        // Hide all sections
+        document.getElementById('page-home').classList.add('hidden');
+        document.getElementById('page-form').classList.add('hidden');
+        document.getElementById('page-display').classList.add('hidden');
+
+        // Show the requested section
+        const targetElement = document.getElementById(`page-${pageName}`);
+        if (targetElement) {
+            targetElement.classList.remove('hidden');
+        }
+
+        // Run specific logic for the display page
+        if (pageName === 'display' && APP_STATE.projectData) {
+            renderDisplay(APP_STATE.projectData);
+        }
+    }
+
+    /**
+     * Handles the form submission: validates, saves to localStorage, and navigates.
+     */
+    function handleFormSubmit() {
+        const form = document.getElementById('project-form');
+        
+        // Basic Validation Check (HTML5 'required' + custom JS check)
+        const name = document.getElementById('full-name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const title = document.getElementById('project-title').value.trim();
+        const description = document.getElementById('project-description').value.trim();
+
+        if (!name || !email || !title || !description) {
+            showMessage("All fields are required. Please fill them out before submitting.");
+            return;
+        }
+        
+        // Email format validation (optional, but good practice)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showMessage("Please enter a valid email address.");
+            return;
+        }
+
+        // Data object to store
+        const data = { name, email, title, description };
+        
+        // 1. Save to localStorage
+        try {
+            localStorage.setItem(DATA_STORAGE_KEY, JSON.stringify(data));
+            APP_STATE.projectData = data; // Update app state
+            showMessage("Submission successful! Redirecting to display page.", 'success');
+            
+            // 2. Navigate to display page after a short delay
+            setTimeout(() => navigate('display'), 500);
+
+        } catch (e) {
+            console.error("Failed to save data to localStorage:", e);
+            showMessage("Error saving data. Please try again.");
+        }
+    }
+
+    /**
+     * Renders the submitted data onto the display page elements.
+     * @param {object} data - The project data object.
+     */
+    function renderDisplay(data) {
+        document.getElementById('display-name').textContent = data.name || 'N/A';
+        document.getElementById('display-email').textContent = data.email || 'N/A';
+        document.getElementById('display-title').textContent = data.title || 'N/A';
+        document.getElementById('display-description').textContent = data.description || 'N/A';
+    }
+
+    /**
+     * Clears stored data and returns to the home page.
+     */
+    function goBackToHome() {
+        localStorage.removeItem(DATA_STORAGE_KEY);
+        APP_STATE.projectData = null;
+        showMessage("Data cleared. Welcome back to the homepage.", 'success');
+        navigate('home');
+    }
+
+    /**
+     * Initialization: Loads data and determines the initial view.
+     */
+    function initializeApp() {
+        const storedData = localStorage.getItem(DATA_STORAGE_KEY);
+        
+        if (storedData) {
+            try {
+                APP_STATE.projectData = JSON.parse(storedData);
+                navigate('display'); // Go straight to display if data exists
+            } catch (e) {
+                console.error("Corrupted data in localStorage, clearing it.", e);
+                localStorage.removeItem(DATA_STORAGE_KEY);
+                navigate('home');
+            }
+        } else {
+            navigate('home'); // Start at the homepage
+        }
+    }
+
+    // Initialize the application when the script loads
+    initializeApp();
+
+</script>
+</body>
+</html>
